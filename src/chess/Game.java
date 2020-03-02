@@ -269,10 +269,14 @@ public class Game extends Application {
                         }
 
                     try {
-                        if (currentPlayer.getColour() == Color.BLACK)
+                        if (currentPlayer.getColour() == Color.BLACK) {
                             currentSquare.board.selectBlackPiece(selectedPiece);
-                        else if (currentPlayer.getColour() == Color.WHITE)
+                            moveToSquare.board.selectWhitePiece(selectedPiece);
+                        }
+                        else if (currentPlayer.getColour() == Color.WHITE) {
                             currentSquare.board.selectWhitePiece(selectedPiece);
+                            moveToSquare.board.selectWhitePiece(selectedPiece);
+                        }
                             
                     } catch (Exception e) {
                         availableSquares = null;
