@@ -79,18 +79,22 @@ public class PieceRook extends Piece {
             iv.setX(SQR_X * Board.SQRsize + Game.xCoor_Board2L+0.1);
             iv.setY(SQR_Y * Board.SQRsize+0.1);
         }
+        if(board.boardLv ==3) {
+            iv.setX(SQR_X * Board.SQRsize + Game.xCoor_Board3L+0.1);
+            iv.setY(SQR_Y * Board.SQRsize+0.1);
+        }
     }
 
     public void setCaptured() {
         setSquare(null);
 
         if (getOwner().getColour() == Color.WHITE) {
-            iv.setX(650);
-            iv.setY(180);
+            iv.setX(10);
+            iv.setY(510);
 
         } else {
-            iv.setX(750);
-            iv.setY(180);
+            iv.setX(20);
+            iv.setY(510);
         }
 
     }

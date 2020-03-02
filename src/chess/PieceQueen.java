@@ -81,6 +81,10 @@ public class PieceQueen extends Piece {
             iv.setX(SQR_X * Board.SQRsize + Game.xCoor_Board2L+0.1);
             iv.setY(SQR_Y * Board.SQRsize+0.1);
         }
+        if(board.boardLv ==3) {
+            iv.setX(SQR_X * Board.SQRsize + Game.xCoor_Board3L+0.1);
+            iv.setY(SQR_Y * Board.SQRsize+0.1);
+        }
     }
 
     public void setCaptured() {

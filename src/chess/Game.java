@@ -12,7 +12,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import javafx.stage.Stage;
@@ -158,6 +157,7 @@ public class Game extends Application {
     public Game game;
 
      static final double xCoor_Board2L = 500.00;
+     static final double xCoor_Board3L = 1000.00;
 
     /** The status. */
 //    public Label status;
@@ -197,11 +197,12 @@ public class Game extends Application {
         // create the board with SQRsize for each tile
 
         root = new Pane(boardL1);
-        rootPane.getChildren().add(root);
+        
         rootPane.getChildren().add(boardL2);
         rootPane.setLeftAnchor(boardL2, xCoor_Board2L);
         rootPane.getChildren().add(boardL3);
-        rootPane.setLeftAnchor(boardL3, 1000.00);
+        rootPane.setLeftAnchor(boardL3, xCoor_Board3L);
+        rootPane.getChildren().add(root);
         instantiate();
 
         // app size
@@ -217,7 +218,7 @@ public class Game extends Application {
                 bishopLabel_white);
         /* disable the resizing function of window */
         // primaryStage.setResizable(false);
-        primaryStage.setTitle("Blitzkrieg");
+        primaryStage.setTitle("Land,Air&Sea");
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -244,9 +245,9 @@ public class Game extends Application {
             public void handle(MouseEvent event) {
                 if(event.getX() <= Game.totalLength)
                     currentSquare = boardL1.getSquareBY_JAVAFX_Coor(event.getX(), event.getY());
-//                if(event.getX() >= Game.xCoor_Board2L && event.getX() <= Game.xCoor_Board2L + totalLength)
-//                    currentSquare = boardL2.getSquareBY_JAVAFX_Coor(event.getX(), event.getY());
-
+                if(event.getX() >= Game.xCoor_Board2L && event.getX() <= Game.xCoor_Board2L + totalLength)
+                    currentSquare = boardL2.getSquareBY_JAVAFX_Coor(event.getX(), event.getY());
+                System.out.println(currentSquare);
                 currentSquare.setFill(Color.RED);
                 selectedPiece = currentSquare.returnPiece();
 
@@ -257,8 +258,10 @@ public class Game extends Application {
 
                 // LV1
                 try {
-                    ArrayList<Square> availableSquares2 = selectedPiece.movePattern(currentPlayer, currentSquare,boardL2);
+                   
                     ArrayList<Square> availableSquares = selectedPiece.movePattern(currentPlayer, currentSquare,boardL1);
+                    ArrayList<Square> availableSquares2 = selectedPiece.movePattern(currentPlayer, currentSquare,boardL2);
+                    ArrayList<Square> availableSquares3 = selectedPiece.movePattern(currentPlayer, currentSquare,boardL3);
                     if (availableSquares.size() != 0)
                         for (int i = 0; i < availableSquares.size(); i++) {
                            
@@ -266,6 +269,8 @@ public class Game extends Application {
                             availableSquares.get(i).setStroke(Color.BLUE);
                             availableSquares2.get(i).setFill(Color.BLUE);
                             availableSquares2.get(i).setFill(Color.YELLOW);
+                            availableSquares3.get(i).setFill(Color.BLUE);
+                            availableSquares3.get(i).setFill(Color.YELLOW);
                         }
 
                     try {
@@ -291,6 +296,8 @@ public class Game extends Application {
             }
 
         });
+        
+        
         scene.setOnMouseReleased(
                 /**
                  * Mouse Event.
@@ -303,20 +310,36 @@ public class Game extends Application {
                      * @param event2 the event
                      */
                     public void handle(MouseEvent event2) {
+                        
+                        
+                        
+                        
                         if(event2.getX() <= Game.totalLength)
                             moveToSquare = boardL1.getSquareBY_JAVAFX_Coor(event2.getX(), event2.getY());
                         
                         if(event2.getX() >= Game.xCoor_Board2L && event2.getX() <= Game.xCoor_Board2L + totalLength)
                             moveToSquare = boardL2.getSquareBY_JAVAFX_Coor(event2.getX(), event2.getY());
                         
+                        if(event2.getX() >= Game.xCoor_Board3L && event2.getX() <= Game.xCoor_Board3L + totalLength)
+                            moveToSquare = boardL3.getSquareBY_JAVAFX_Coor(event2.getX(), event2.getY());
                         
-//                        if(event.getX() <= Game.totalLength)
-//                            currentSquare = boardL1.getSquareBY_JAVAFX_Coor(event.getX(), event.getY());
-//                        if(event.getX() >= Game.xCoor_Board2L && event.getX() <= Game.xCoor_Board2L + totalLength)
-//                            currentSquare = boardL2.getSquareBY_JAVAFX_Coor(event.getX(), event.getY());
+                        System.out.println("Line 326" + moveToSquare.board.boardLv);
                         
-                       
-                        System.out.println("currentSquare  340 " + currentSquare.board.boardLv);
+                        try {
+                            if (currentPlayer.getColour() == Color.BLACK) {
+                                System.out.println("Line325 selected Piece: "+ selectedPiece);
+                                System.out.println("Line326 currentSqr : "+ currentSquare);
+                                currentSquare.board.selectWhitePiece(selectedPiece);
+                                moveToSquare.board.selectWhitePiece(selectedPiece);
+                            }
+                            else if (currentPlayer.getColour() == Color.WHITE) {
+                                moveToSquare.board.selectWhitePiece(selectedPiece);
+                            }
+                                
+                        } catch (Exception e) {
+//                            selectedPiece = currentSquare.returnPiece();
+                            System.out.println("cannot choose");
+                        }
                         
                         selectedPiece = currentSquare.returnPiece();
                         try {
@@ -346,77 +369,27 @@ public class Game extends Application {
                         System.out.println("SQR color " + moveToSquare.getColor());
                         boolean canMove = false;
 
-//                        // If LV2
-//                        if (event2.getX() > xCoor_Board2L && event2.getX() < xCoor_Board2L + totalLength) {
-//                            try {
-//                                currentSquare.setFill(currentSquare.getColor());
-//                                ArrayList<Square> availableSquares = selectedPiece.movePattern(currentPlayer,
-//                                        currentSquare, boardL2);
-//                                for (int i = 0; i < availableSquares.size(); i++) {
-//
-//                                    availableSquares.get(i).setStroke(null);
-//                                    availableSquares.get(i).setFill(availableSquares.get(i).getColor());
-//
-//                                }
-//
-//                                if (currentPlayer == blackPlayer && boardL2.getSquareBY_JAVAFX_Coor(event2.getX(),
-//                                        event2.getY()) != currentSquare) {
-//                                    System.out.println(boardL2.getSquareBY_JAVAFX_Coor(event2.getX(), event2.getY()));
-////                                    ArrayList<Square> availableSquares = selectedPiece.movePattern(currentPlayer,currentSquare, board);
-//                                    for (int i = 0; i < availableSquares.size(); i++) {
-//                                        if (availableSquares.get(i) == boardL2.getSquareBY_JAVAFX_Coor(event2.getX(),
-//                                                event2.getY()))
-//                                            canMove = true;
-////                                            System.out.println(canMove);
-//
-//                                    }
-//                                    if (canMove) {
-//                                        boardL2.moveBlackPiece(event2.getX(), event2.getY(),currentSquare.board);
-//                                        currentSquare.setPiece(null);
-//                                        currentSquare.isOccupied = false;
-//                                    }
-//
-//                                } else if (currentPlayer == whitePlayer && boardL2
-//                                        .getSquareBY_JAVAFX_Coor(event2.getX(), event2.getY()) != currentSquare) {
-//                                    for (int i = 0; i < availableSquares.size(); i++) {
-//                                        if (availableSquares.get(i) == boardL2.getSquareBY_JAVAFX_Coor(event2.getX(),
-//                                                event2.getY()))
-//                                            canMove = true;
-//
-//                                    }
-//                                    if (canMove) {
-//                                        boardL2.moveWhitePiece(event2.getX(), event2.getY(),currentSquare.board);
-//                                        currentSquare.setPiece(null);
-//                                        currentSquare.isOccupied = false;
-//                                    }
-//                                }
-//                            } catch (Exception e) {
-//                                currentSquare.setPiece(selectedPiece);
-//                                System.out.println("Choose the other color to play!");
-//                            }
-//
-//                            if (currentPlayer == blackPlayer && boardL2.blackMoveSuccess == true) {
-//                                switchPlayers();
-//
-//                                boardL2.blackMoveSuccess = false;
-//                            } else if (currentPlayer == whitePlayer && boardL2.whiteMoveSuccess == true) {
-//                                switchPlayers();
-//
-//                                boardL2.whiteMoveSuccess = false;
-//                            }
-//                        }
                         // LV1
                         try {
                             currentSquare.setFill(currentSquare.getColor());
                             System.out.println(currentSquare.getColor());
                             ArrayList<Square> availableSquares = selectedPiece.movePattern(currentPlayer, currentSquare,
                                     moveToSquare.board);
+                            ArrayList<Square> availableSquares2 = selectedPiece.movePattern(currentPlayer, currentSquare,
+                                    boardL2);
+                            ArrayList<Square> availableSquares3 = selectedPiece.movePattern(currentPlayer, currentSquare,
+                                    boardL3);
+                            ArrayList<Square> availableSquares4 = selectedPiece.movePattern(currentPlayer, currentSquare,
+                                    boardL1);
                             for (int i = 0; i < availableSquares.size(); i++) {
-
-//                                    System.out.println("get avaiable X" + availableSquares.get(i).getX());
-//                                    System.out.println("get available Y" + availableSquares.get(i).getY());
                                 availableSquares.get(i).setStroke(null);
                                 availableSquares.get(i).setFill(availableSquares.get(i).getColor());
+                                availableSquares2.get(i).setStroke(null);
+                                availableSquares2.get(i).setFill(availableSquares.get(i).getColor());
+                                availableSquares3.get(i).setStroke(null);
+                                availableSquares3.get(i).setFill(availableSquares.get(i).getColor());
+                                availableSquares4.get(i).setStroke(null);
+                                availableSquares4.get(i).setFill(availableSquares.get(i).getColor());
 
                             }
                             

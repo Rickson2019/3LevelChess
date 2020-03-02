@@ -86,6 +86,11 @@ public class PiecePawn extends Piece {
             iv.setX(SQR_X * Board.SQRsize + Game.xCoor_Board2L+0.1);
             iv.setY(SQR_Y * Board.SQRsize+0.1);
         }
+        if(board.boardLv ==3) {
+            System.out.println("yidongzhong");
+            iv.setX(SQR_X * Board.SQRsize + Game.xCoor_Board3L+0.1);
+            iv.setY(SQR_Y * Board.SQRsize+0.1);
+        }
     }
 
     @Override
@@ -94,7 +99,7 @@ public class PiecePawn extends Piece {
         int i = 0;
         // Black Player
 
-        if (player.getColour() == Color.BLACK) {
+        if (player.getColour() == Color.BLACK && thisSquare.returnPiece()!= null) {
 
             // X direction right take out X+1 Y+1
             if (board.getSquare(thisSquare.getSQR_X() + 1, thisSquare.getSQR_Y() + 1).isOccupied
@@ -170,7 +175,7 @@ public class PiecePawn extends Piece {
         }
         // White Player
 
-        else if (player.getColour() == Color.WHITE) {
+        else if (player.getColour() == Color.WHITE && thisSquare.returnPiece()!= null) {
 
             // take out enemy pieces
             // Take out the One on the Right
@@ -189,13 +194,18 @@ public class PiecePawn extends Piece {
                 System.out.println("some may be out of bound");
             }
             // Take out the One on the Left
-            if (board.getSquare(thisSquare.getSQR_X() - 1, thisSquare.getSQR_Y() - 1).isOccupied
-                    && board.getSquare(thisSquare.getSQR_X() - 1, thisSquare.getSQR_Y() - 1)
-                            .returnPiece().player.colour != thisSquare.returnPiece().player.colour) {
-                availableSquares.add(board.getSquare(thisSquare.getSQR_X() - 1, thisSquare.getSQR_Y() - 1));
-                availableSquares.get(i).setSQR_X(thisSquare.getSQR_X() - 1);
-                availableSquares.get(i).setSQR_Y(thisSquare.getSQR_Y() - 1);
-                i = i++;
+            try {
+                if (board.getSquare(thisSquare.getSQR_X() - 1, thisSquare.getSQR_Y() - 1).isOccupied
+                        && board.getSquare(thisSquare.getSQR_X() - 1, thisSquare.getSQR_Y() - 1)
+                                .returnPiece().player.colour != thisSquare.returnPiece().player.colour) {
+                    availableSquares.add(board.getSquare(thisSquare.getSQR_X() - 1, thisSquare.getSQR_Y() - 1));
+                    availableSquares.get(i).setSQR_X(thisSquare.getSQR_X() - 1);
+                    availableSquares.get(i).setSQR_Y(thisSquare.getSQR_Y() - 1);
+                    i = i++;
+                }
+            } catch (Exception e) {
+                System.out.println("some may be out of bound");
+                e.printStackTrace();
             }
 
             // Move either two grids or just one for the first movement
@@ -258,11 +268,11 @@ public class PiecePawn extends Piece {
         setSquare(null);
 
         if (getOwner().getColour() == Color.WHITE) {
-            getIv().setX(650);
-            getIv().setY(500);
+            getIv().setX(30);
+            getIv().setY(510);
         } else {
-            getIv().setX(750);
-            getIv().setY(500);
+            getIv().setX(40);
+            getIv().setY(510);
         }
 
     }

@@ -313,19 +313,19 @@ public class Board extends Group {
             try {
                 myPiece.getSquare().setActive(true);
             } catch (Exception e) {
-                myPiece.getSquare().setActive(false);
+//                myPiece.getSquare().setActive(false);
                 System.out.println("Set Active failed..");
             }
            
         
         }
-       
-        if(myPiece.getSquare().getActive() && myPiece.getOwner().getColour()!=Color.BLACK) {
+       //323 myPiece.getSquare().getActive() &&
+        if( myPiece.getOwner().getColour()!=Color.BLACK) {
             
            
         
         myPiece.getSquare().setOccupied(false);
-        myPiece.setSquare(null);
+//        myPiece.setSquare(null);
         
         }
         }catch (Exception e) {
