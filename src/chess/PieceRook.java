@@ -89,11 +89,11 @@ public class PieceRook extends Piece {
         setSquare(null);
 
         if (getOwner().getColour() == Color.WHITE) {
-            iv.setX(10);
+            iv.setX(150);
             iv.setY(510);
 
         } else {
-            iv.setX(20);
+            iv.setX(200);
             iv.setY(510);
         }
 
@@ -133,7 +133,7 @@ public class PieceRook extends Piece {
         while (k < 7) {
         try {
                 k += 1;
-                availableSquares.add(board.getSquare(thisSquare.getSQR_X(), k));
+                availableSquares.add(board.getSquare(k, board.getSquareY(k, thisSquare.getSQR_Y())));
                 availableSquares.get(i).setSQR_X(board.getSquare(k,thisSquare.getSQR_Y()).getSQR_X());
                 availableSquares.get(i).setSQR_Y(board.getSquare(k,thisSquare.getSQR_Y()).getSQR_Y());
                 i++;
@@ -175,7 +175,7 @@ public class PieceRook extends Piece {
 
         // left
         int m = thisSquare.getSQR_X();
-        while (m > 0 && !board.getSquare(m, thisSquare.getSQR_Y()).isOccupied) {
+        while (m > 0 && !board.getSquare(m - 1, thisSquare.getSQR_Y()).isOccupied) {
             try {
                 m -= 1;
                 availableSquares.add(board.getSquare(m, thisSquare.getSQR_Y()));
@@ -186,7 +186,7 @@ public class PieceRook extends Piece {
                 continue;
             }
             if (board.getSquare(m  , thisSquare.getSQR_Y()).isOccupied) {
-                if (board.getSquare(m  , thisSquare.getSQR_Y() ).returnPiece().player.colour == thisSquare.returnPiece().player.colour) {
+                if (board.getSquare(m , thisSquare.getSQR_Y() ).returnPiece().player.colour == thisSquare.returnPiece().player.colour) {
                     availableSquares.remove(i-1);
                     i--;
                 }

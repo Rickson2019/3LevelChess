@@ -82,11 +82,11 @@ public class PieceKnight extends Piece {
         setSquare(null);
         
         if (getOwner().getColour() == Color.WHITE) {
-            iv.setX(650);
-            iv.setY(400);
+            iv.setX(30);
+            iv.setY(610);
         } else {
-            iv.setX(750);
-            iv.setY(400);
+            iv.setX(40);
+            iv.setY(610);
         }
 
     }

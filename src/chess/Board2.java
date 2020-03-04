@@ -213,46 +213,46 @@ public class Board2 extends Board {
      * Inits the pieces.
      */
     public void initPieces() {
-
-        
-        
-        
-        squares[1][0].setOccupied(false);
-        squares[2][0].setOccupied(false);
-        squares[0][0].setOccupied(false);
-        squares[3][0].setOccupied(false);
-        squares[4][0].setOccupied(false);
-        squares[5][0].setOccupied(false);
-        squares[6][0].setOccupied(false);
-        squares[7][0].setOccupied(false);
-        
-        squares[0][1].setOccupied(false);
-        squares[1][1].setOccupied(false);
-        squares[2][1].setOccupied(false);
-        squares[3][1].setOccupied(false);
-        squares[4][1].setOccupied(false);
-        squares[5][1].setOccupied(false);
-        squares[6][1].setOccupied(false);
-        squares[7][1].setOccupied(false);
-        
-        squares[0][6].setOccupied(false);
-        squares[1][6].setOccupied(false);
-        squares[2][6].setOccupied(false);
-        squares[3][6].setOccupied(false);
-        squares[4][6].setOccupied(false);
-        squares[5][6].setOccupied(false);
-        squares[6][6].setOccupied(false);
-        squares[7][6].setOccupied(false);
-        
-        squares[0][7].setOccupied(false);
-        squares[1][7].setOccupied(false);
-        squares[2][7].setOccupied(false);
-        squares[3][7].setOccupied(false);
-        squares[4][7].setOccupied(false);
-        squares[5][7].setOccupied(false);
-        squares[6][7].setOccupied(false);
-        squares[7][7].setOccupied(false);
-     
+//
+//        
+//        
+//        
+//        squares[1][0].setOccupied(false);
+//        squares[2][0].setOccupied(false);
+//        squares[0][0].setOccupied(false);
+//        squares[3][0].setOccupied(false);
+//        squares[4][0].setOccupied(false);
+//        squares[5][0].setOccupied(false);
+//        squares[6][0].setOccupied(false);
+//        squares[7][0].setOccupied(false);
+//        
+//        squares[0][1].setOccupied(false);
+//        squares[1][1].setOccupied(false);
+//        squares[2][1].setOccupied(false);
+//        squares[3][1].setOccupied(false);
+//        squares[4][1].setOccupied(false);
+//        squares[5][1].setOccupied(false);
+//        squares[6][1].setOccupied(false);
+//        squares[7][1].setOccupied(false);
+//        
+//        squares[0][6].setOccupied(false);
+//        squares[1][6].setOccupied(false);
+//        squares[2][6].setOccupied(false);
+//        squares[3][6].setOccupied(false);
+//        squares[4][6].setOccupied(false);
+//        squares[5][6].setOccupied(false);
+//        squares[6][6].setOccupied(false);
+//        squares[7][6].setOccupied(false);
+//        
+//        squares[0][7].setOccupied(false);
+//        squares[1][7].setOccupied(false);
+//        squares[2][7].setOccupied(false);
+//        squares[3][7].setOccupied(false);
+//        squares[4][7].setOccupied(false);
+//        squares[5][7].setOccupied(false);
+//        squares[6][7].setOccupied(false);
+//        squares[7][7].setOccupied(false);
+//     
     }
     
 

@@ -41,11 +41,7 @@ public class Board extends Group {
     /** The pointer black move success. */
     public boolean blackMoveSuccess;
     
-    public static int counterBlack = 16;
-    
-    public static int counterWhite = 16;
-    
-    public GridPane board = new GridPane();
+//    public GridPane board = new GridPane();
     /**
      * Instantiates a new board.
      */
@@ -184,7 +180,8 @@ public class Board extends Group {
     public int getSquareX(double raw_X_Coor,double raw_Y_Coor) {
         double temp1 = raw_X_Coor;
         int SQR_X = 0;
-
+        if(raw_X_Coor >= 0 &&  raw_X_Coor <= SQRsize )
+            SQR_X = 0;
         while (temp1 > SQRsize) {
             temp1 = temp1 - SQRsize;
             SQR_X++;         
@@ -275,10 +272,10 @@ public class Board extends Group {
             //SET ALL BLACKS TO ACTIVE
             if(myPiece.getOwner().getColour()==Color.BLACK) {
                 myPiece.getSquare().setActive(true);
-            
             }
         } catch (Exception e) {
-            myPiece.getSquare().setActive(false);
+//            myPiece.getSquare().setActive(false);
+            System.out.println("Mypuiece" + myPiece);
             System.out.println("set active failed (Board 283)");
         }
         
@@ -286,19 +283,23 @@ public class Board extends Group {
        
         try {
             //SET THE SQUAE TO BE NOT OCCUPIED
-            if(myPiece.getSquare().getActive() && myPiece.getOwner().getColour() == Color.BLACK) {
+            if(
+//                    myPiece.getSquare().getActive() && 
+                    myPiece.getOwner().getColour() == Color.WHITE) {
                 
                 
             
             myPiece.getSquare().setOccupied(false);
-            myPiece.setSquare(null);
-            selectedPiece = myPiece;
+//            myPiece.setSquare(null);
+            
             
 
             }
         } catch (Exception e) {
             myPiece.getSquare().setOccupied(true);
             e.printStackTrace();
+        }finally {
+            selectedPiece = myPiece;
         }
     }
     
@@ -316,15 +317,10 @@ public class Board extends Group {
 //                myPiece.getSquare().setActive(false);
                 System.out.println("Set Active failed..");
             }
-           
-        
         }
        //323 myPiece.getSquare().getActive() &&
-        if( myPiece.getOwner().getColour()!=Color.BLACK) {
-            
-           
-        
-        myPiece.getSquare().setOccupied(false);
+        if( myPiece.getOwner().getColour()==Color.BLACK) {
+            myPiece.getSquare().setOccupied(false);
 //        myPiece.setSquare(null);
         
         }
@@ -357,7 +353,7 @@ public class Board extends Group {
             System.out.println("the Square to go is occupied? " + board.getSquare(got_SQR_X, got_SQR_Y).isOccupied);
 
             if(!board.getSquare(got_SQR_X, got_SQR_Y).isOccupied)
-            {
+            { 
                 System.out.println("Moving to board LV " + board.boardLv + " using Move()");
                 selectedPiece.move(got_SQR_X,got_SQR_Y,board);
                 board.getSquare(got_SQR_X,got_SQR_Y).setPiece(selectedPiece);
@@ -365,23 +361,18 @@ public class Board extends Group {
                 board.getSquare(got_SQR_X,got_SQR_Y).setOccupied(true);
                 blackMoveSuccess = true;
             } else {
-               
-                //makes the piece of the square captured
-                board.getSquare(got_SQR_X, got_SQR_Y).returnPiece().setCaptured(); 
-            
-      
-                        selectedPiece.move(got_SQR_X,got_SQR_Y,board);
-           
-                        board.getSquare(got_SQR_X,got_SQR_Y).setPiece(selectedPiece);
-            selectedPiece.setSquare(board.getSquare(got_SQR_X,got_SQR_Y));
-            board.getSquare(got_SQR_X,got_SQR_Y).setOccupied(true);
-            
-            blackMoveSuccess = true;
+
+                // makes the piece of the square captured
+                board.getSquare(got_SQR_X, got_SQR_Y).returnPiece().setCaptured();
+                selectedPiece.move(got_SQR_X, got_SQR_Y, board);
+                board.getSquare(got_SQR_X, got_SQR_Y).setPiece(selectedPiece);
+                selectedPiece.setSquare(board.getSquare(got_SQR_X, got_SQR_Y));
+                board.getSquare(got_SQR_X, got_SQR_Y).setOccupied(true);
+                blackMoveSuccess = true;
             }
-            counterBlack--;
             
             } else
-        blackMoveFail = true;
+                blackMoveSuccess = false;
     }
     
     
@@ -398,37 +389,34 @@ public class Board extends Group {
         int gotSQR_X = board.getSquareX(x, y);
         System.out.println("gotSQR_X" +  board.getSquareX(x, y));
         int gotSQR_Y = board.getSquareY(x, y);
-        System.out.println("gotSQR_Y" +  board.getSquareY(x, y));
-        System.out.println("board LV " +  board.getSquareBY_JAVAFX_Coor(x, y).board.boardLv);
-            System.out.println("Strange at Board line 402, cannot  get piece");
-        System.out.println("selectedPiece.getOwner().getColour() " + selectedPiece);
+//        System.out.println("gotSQR_Y" +  board.getSquareY(x, y));
+//        System.out.println("board LV " +  board.getSquareBY_JAVAFX_Coor(x, y).board.boardLv);
+//        System.out.println("Strange at Board line 402, cannot  get piece");
+//        System.out.println("selectedPiece.getOwner().getColour() " + selectedPiece);
         
         if(selectedPiece.getOwner().getColour()==Color.WHITE) {
-            System.out.println("the Square to go is occupied? " + board.getSquare(gotSQR_X, gotSQR_Y).isOccupied);
+//            System.out.println("the Square to go is occupied? " + board.getSquare(gotSQR_X, gotSQR_Y).isOccupied);
            if (!board.getSquare(gotSQR_X, gotSQR_Y).isOccupied()) {
-               System.out.println("Moving to board LV " + board.boardLv + " using Move()");
-        selectedPiece.move(gotSQR_X,gotSQR_Y,board);
-        board.getSquare(gotSQR_X,gotSQR_Y).setPiece(selectedPiece);
-        selectedPiece.setSquare(getSquare(gotSQR_X,gotSQR_Y));
-        board.getSquare(gotSQR_X,gotSQR_Y).setOccupied(true);
-        whiteMoveSuccess = true;
+//        System.out.println("Moving to board LV " + board.boardLv + " using Move()");
+                selectedPiece.move(gotSQR_X,gotSQR_Y,board);
+                board.getSquare(gotSQR_X,gotSQR_Y).setPiece(selectedPiece);
+                selectedPiece.setSquare(getSquare(gotSQR_X,gotSQR_Y));
+                board.getSquare(gotSQR_X,gotSQR_Y).setOccupied(true);
+                whiteMoveSuccess = true;
         
            } else {
-                
                board.getSquare(gotSQR_X, gotSQR_Y).returnPiece().setCaptured();
-               
-           selectedPiece.move(gotSQR_X,gotSQR_Y,board);
-           board.getSquare(gotSQR_X,gotSQR_Y).setPiece(selectedPiece);
-           selectedPiece.setSquare(board.getSquare(gotSQR_X,gotSQR_Y));
-           board.getSquare(gotSQR_X,gotSQR_Y).setOccupied(true);
+               selectedPiece.move(gotSQR_X,gotSQR_Y,board);
+               board.getSquare(gotSQR_X,gotSQR_Y).setPiece(selectedPiece);
+               selectedPiece.setSquare(board.getSquare(gotSQR_X,gotSQR_Y));
+               board.getSquare(gotSQR_X,gotSQR_Y).setOccupied(true);
           
               
            whiteMoveSuccess = true;
            }
-           counterWhite--;
            
         } else {
-            pointerWhiteMoveFail = true;
+            whiteMoveSuccess = false;
         }
     }
     

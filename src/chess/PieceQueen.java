@@ -91,11 +91,11 @@ public class PieceQueen extends Piece {
         setSquare(null);
         
         if (getOwner().getColour() == Color.WHITE) {
-            iv.setX(650);
-            iv.setY(60);
+            iv.setX(100);
+            iv.setY(560);
         } else {
-            iv.setX(750);
-            iv.setY(60);
+            iv.setX(160);
+            iv.setY(560);
         }
     }
 
@@ -165,9 +165,8 @@ public class PieceQueen extends Piece {
                 j -= 1;
                 k -= 1;
                 availableSquares.add(board.getSquare(j, k));
-
-                availableSquares.get(i).setSQR_Y(board.getSquare(j, k).getSQR_Y());
                 availableSquares.get(i).setSQR_X(board.getSquare(j, k).getSQR_X());
+                availableSquares.get(i).setSQR_Y(board.getSquare(j, k).getSQR_Y());
                 i++;
                 if(board.getSquare(j, k).isOccupied) {
                     if (board.getSquare(j, k).returnPiece().player.colour == thisSquare.returnPiece().player.colour) {

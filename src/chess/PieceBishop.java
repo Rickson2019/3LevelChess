@@ -148,7 +148,7 @@ public class PieceBishop extends Piece{
         k = thisSquare.SQR_Y;
 
         // NE
-        while (j < 8 && k > 0) {
+        while (j < 7 && k > 0) {
 
             try {
                 j += 1;
@@ -203,7 +203,7 @@ public class PieceBishop extends Piece{
         k = thisSquare.getSQR_Y() ;
 
         // SW
-        while (j > 0 && k < 8 ) {
+        while (j > 0 && k < 7 ) {
 
             try { 
 
@@ -215,8 +215,6 @@ public class PieceBishop extends Piece{
                 availableSquares.get(i).setSQR_X(board.getSquare(j, k).getSQR_X());
                 availableSquares.get(i).setSQR_Y(board.getSquare(j, k).getSQR_Y());
                 i++;
-                
-      
                 
                 if (board.getSquare(j , k).isOccupied) {
                     System.out.println(thisSquare);

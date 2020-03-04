@@ -195,7 +195,7 @@ public class PiecePawn extends Piece {
             }
             // Take out the One on the Left
             try {
-                if (board.getSquare(thisSquare.getSQR_X() - 1, thisSquare.getSQR_Y() - 1).isOccupied
+                if (board.getSquare(thisSquare.getSQR_X() - 1, thisSquare.getSQR_Y() - 1)!=null &&board.getSquare(thisSquare.getSQR_X() - 1, thisSquare.getSQR_Y() - 1).isOccupied
                         && board.getSquare(thisSquare.getSQR_X() - 1, thisSquare.getSQR_Y() - 1)
                                 .returnPiece().player.colour != thisSquare.returnPiece().player.colour) {
                     availableSquares.add(board.getSquare(thisSquare.getSQR_X() - 1, thisSquare.getSQR_Y() - 1));
@@ -235,7 +235,6 @@ public class PiecePawn extends Piece {
                     availableSquares.add(board.getSquare(thisSquare.getSQR_X(), thisSquare.getSQR_Y() - 1));
                     availableSquares.get(i).setSQR_X(thisSquare.getSQR_X());
                     availableSquares.get(i).setSQR_Y(thisSquare.getSQR_Y() - 1);
-
                     i = i++;
                 }
 

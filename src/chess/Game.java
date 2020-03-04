@@ -41,7 +41,7 @@ public class Game extends Application {
 
     /** The selected piece. */
     public Piece selectedPiece = null;
-
+    Piece tmpPicePiece = selectedPiece;
     /** The white player. */
     private final Player whitePlayer;
 
@@ -62,48 +62,48 @@ public class Game extends Application {
     public Label rookLabel_white;
 
     /** The Wrook. */
-    public Piece rook_white;
+    public Piece rook_black1;
 
     /** The Wrook 2. */
-    public Piece rook_white2;
+    public Piece rook_black2;
 
     /** The Wpawn. */
-    public Piece pawn_white;
+    public Piece pawn_black1;
 
     /** The Wpawn 2. */
-    public Piece pawn_white2;
+    public Piece pawn_black2;
 
     /** The Wpawn 3. */
-    public Piece pawn_white3;
+    public Piece pawn_black3;
 
     /** The Wpawn 4. */
-    public Piece pawn_white4;
+    public Piece pawn_black4;
 
     /** The Wpawn 5. */
-    public Piece pawn_white5;
+    public Piece pawn_black5;
 
     /** The Wpawn 6. */
-    public Piece pawn_white6;
+    public Piece pawn_black6;
 
     /** The Wpawn 7. */
-    public Piece pawn_white7;
+    public Piece pawn_black7;
 
     /** The Wpawn 8. */
-    public Piece pawn_white8;
+    public Piece pawn_black8;
 
     /** The Wking. */
-    public Piece Wking;
+    public Piece king_black;
 
     public Label queenwhiteLabel_white;
     /** The Wqueen. */
-    public Piece queen_white;
+    public Piece queen_black;
 
     public Label knightLabel_white;
     /** The Wknight. */
-    public Piece knight_white;
+    public Piece knight_black1;
 
     /** The Wknight 2. */
-    public Piece knight_white2;
+    public Piece knight_black2;
 
     /** The Bbishop. */
     public Piece bishop_black;
@@ -112,46 +112,46 @@ public class Game extends Application {
     public Piece bishop_black2;
 
     /** The Brook. */
-    public Piece rook_black;
+    public Piece rook_white1;
 
     /** The Brook 2. */
-    public Piece rook_black2;
+    public Piece rook_white2;
 
     /** The Bpawn. */
-    public Piece pawn_black;
+    public Piece pawn_white1;
 
     /** The Bpawn 2. */
-    public Piece Bpawn2;
+    public Piece pawn_white2;
 
     /** The Bpawn 3. */
-    public Piece Bpawn3;
+    public Piece pawn_white3;
 
     /** The Bpawn 4. */
-    public Piece Bpawn4;
+    public Piece pawn_white4;
 
     /** The Bpawn 5. */
-    public Piece Bpawn5;
+    public Piece pawn_white5;
 
     /** The Bpawn 6. */
-    public Piece Bpawn6;
+    public Piece pawn_white6;
 
     /** The Bpawn 7. */
-    public Piece Bpawn7;
+    public Piece pawn_white7;
 
     /** The Bpawn 8. */
-    public Piece Bpawn8;
+    public Piece pawn_white8;
 
     /** The Bking. */
-    public Piece Bking;
+    public Piece king_white;
 
     /** The Bqueen. */
-    public Piece queen_black;
+    public Piece queen_white;
 
     /** The Bknight. */
-    public Piece Bknight;
+    public Piece knight_white1;
 
     /** The Bknight 2. */
-    public Piece Bknight2;
+    public Piece knight_white2;
 
     /** The game. */
     public Game game;
@@ -212,9 +212,9 @@ public class Game extends Application {
         // Scene scene = new Scene(board);
         root.getChildren().addAll(bishop_white, bishop_white2, bishop_black, bishop_black2,
 
-                rook_white, rook_white2, rook_black, rook_black2, pawn_white, pawn_white2, pawn_white3, pawn_white4,
-                pawn_white5, pawn_white6, pawn_white7, pawn_white8, pawn_black, Bpawn2, Bpawn3, Bpawn4, Bpawn5, Bpawn6,
-                Bpawn7, Bpawn8, Wking, Bking, queen_white, queen_black, knight_white, knight_white2, Bknight, Bknight2,
+                rook_black1, rook_black2, rook_white1, rook_white2, pawn_black1, pawn_black2, pawn_black3, pawn_black4,
+                pawn_black5, pawn_black6, pawn_black7, pawn_black8, pawn_white1, pawn_white2, pawn_white3, pawn_white4, pawn_white5, pawn_white6,
+                pawn_white7, pawn_white8, king_black, king_white, queen_black, queen_white, knight_black1, knight_black2, knight_white1, knight_white2,
                 bishopLabel_white);
         /* disable the resizing function of window */
         // primaryStage.setResizable(false);
@@ -247,10 +247,12 @@ public class Game extends Application {
                     currentSquare = boardL1.getSquareBY_JAVAFX_Coor(event.getX(), event.getY());
                 if(event.getX() >= Game.xCoor_Board2L && event.getX() <= Game.xCoor_Board2L + totalLength)
                     currentSquare = boardL2.getSquareBY_JAVAFX_Coor(event.getX(), event.getY());
-                System.out.println(currentSquare);
+                if(event.getX() >= Game.xCoor_Board3L && event.getX() <= Game.xCoor_Board3L + totalLength)
+                    currentSquare = boardL3.getSquareBY_JAVAFX_Coor(event.getX(), event.getY());
+                
                 currentSquare.setFill(Color.RED);
                 selectedPiece = currentSquare.returnPiece();
-
+                
                 if (currentPlayer == blackPlayer && currentSquare.isOccupied)
                     activateBlack();
                 else if (currentPlayer == whitePlayer && currentSquare.isOccupied)
@@ -260,31 +262,43 @@ public class Game extends Application {
                 try {
                    
                     ArrayList<Square> availableSquares = selectedPiece.movePattern(currentPlayer, currentSquare,boardL1);
-                    ArrayList<Square> availableSquares2 = selectedPiece.movePattern(currentPlayer, currentSquare,boardL2);
-                    ArrayList<Square> availableSquares3 = selectedPiece.movePattern(currentPlayer, currentSquare,boardL3);
-                    if (availableSquares.size() != 0)
+                    ArrayList<Square> availableSquares2 = selectedPiece.movePattern(currentPlayer, currentSquare.board.getSquare(currentSquare.getSQR_X(), currentSquare.getSQR_Y()),boardL2);
+                    ArrayList<Square> availableSquares3 = selectedPiece.movePattern(currentPlayer, currentSquare.board.getSquare(currentSquare.getSQR_X(), currentSquare.getSQR_Y()),boardL3);
+                    if (availableSquares.size() != 0) 
                         for (int i = 0; i < availableSquares.size(); i++) {
-                           
+
                             availableSquares.get(i).setFill(Color.YELLOW);
                             availableSquares.get(i).setStroke(Color.BLUE);
-                            availableSquares2.get(i).setFill(Color.BLUE);
-                            availableSquares2.get(i).setFill(Color.YELLOW);
-                            availableSquares3.get(i).setFill(Color.BLUE);
-                            availableSquares3.get(i).setFill(Color.YELLOW);
                         }
+                    
+                    if (availableSquares2.size() != 0)
+                        for (int i = 0; i < availableSquares2.size(); i++) {
+
+                            availableSquares2.get(i).setFill(Color.YELLOW);
+                            availableSquares2.get(i).setStroke(Color.BLUE);
+                        }
+                    
+                    if (availableSquares3.size() != 0)
+                        for (int i = 0; i < availableSquares3.size(); i++) {
+                            availableSquares3.get(i).setFill(Color.YELLOW);
+                            availableSquares3.get(i).setStroke(Color.BLUE);
+                        }
+                    
 
                     try {
                         if (currentPlayer.getColour() == Color.BLACK) {
                             currentSquare.board.selectBlackPiece(selectedPiece);
-                            moveToSquare.board.selectWhitePiece(selectedPiece);
+//                            moveToSquare.board.selectWhitePiece(selectedPiece);
                         }
                         else if (currentPlayer.getColour() == Color.WHITE) {
                             currentSquare.board.selectWhitePiece(selectedPiece);
-                            moveToSquare.board.selectWhitePiece(selectedPiece);
+//                            moveToSquare.board.selectWhitePiece(selectedPiece);
                         }
                             
                     } catch (Exception e) {
                         availableSquares = null;
+                        availableSquares2 = null;
+                        availableSquares3 = null;
 //                        selectedPiece = currentSquare.returnPiece();
                         System.out.println("cannot choose");
                     }
@@ -310,7 +324,7 @@ public class Game extends Application {
                      * @param event2 the event
                      */
                     public void handle(MouseEvent event2) {
-                        
+                        boolean canMove = false;
                         
                         
                         
@@ -323,17 +337,20 @@ public class Game extends Application {
                         if(event2.getX() >= Game.xCoor_Board3L && event2.getX() <= Game.xCoor_Board3L + totalLength)
                             moveToSquare = boardL3.getSquareBY_JAVAFX_Coor(event2.getX(), event2.getY());
                         
-                        System.out.println("Line 326" + moveToSquare.board.boardLv);
+                        System.out.println("Line 326: moveToSquare.board.boardLv " + moveToSquare.board.boardLv);
                         
                         try {
                             if (currentPlayer.getColour() == Color.BLACK) {
-                                System.out.println("Line325 selected Piece: "+ selectedPiece);
-                                System.out.println("Line326 currentSqr : "+ currentSquare);
-                                currentSquare.board.selectWhitePiece(selectedPiece);
-                                moveToSquare.board.selectWhitePiece(selectedPiece);
+                                System.out.println("Line330 selected Piece: "+ selectedPiece);
+                                System.out.println("Line331 currentSqr : "+ currentSquare);
+                                System.out.println("line 345 selectPiece commented out");
+                                currentSquare.board.selectBlackPiece(selectedPiece);
+                                moveToSquare.board.selectBlackPiece(selectedPiece);
+                                
                             }
                             else if (currentPlayer.getColour() == Color.WHITE) {
                                 moveToSquare.board.selectWhitePiece(selectedPiece);
+                                currentSquare.board.selectWhitePiece(selectedPiece);
                             }
                                 
                         } catch (Exception e) {
@@ -341,34 +358,27 @@ public class Game extends Application {
                             System.out.println("cannot choose");
                         }
                         
-                        selectedPiece = currentSquare.returnPiece();
-                        try {
-                            System.out.println("selected piece 314 "+selectedPiece);
-                            if (currentPlayer.getColour() == Color.BLACK)
-                                currentSquare.board.selectBlackPiece(selectedPiece);
-                            else if (currentPlayer.getColour() == Color.WHITE)
-                                currentSquare.board.selectWhitePiece(selectedPiece);
-                     
-                        
-                        
-                        } catch (Exception e) {
-                            System.out.println("I clicked on " 
-                                    + moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(), event2.getY()).board.boardLv 
-                                    + " And the SelectedPiece is " + selectedPiece );
-                        }
-                        
-                        
+//                        System.out.println("selectedPiece Game line 342 " + selectedPiece);
+//                        System.out.println("LV " + moveToSquare.board.boardLv);
+//                        System.out.println("SQR color " + moveToSquare.getColor());
+//                        try {
+//                            System.out.println("selected piece 314 "+selectedPiece);
+//                            if (currentPlayer.getColour() == Color.BLACK)
+//                                currentSquare.board.selectBlackPiece(selectedPiece);
+//                            else if (currentPlayer.getColour() == Color.WHITE)
+//                                currentSquare.board.selectWhitePiece(selectedPiece);
+//                     
+//                        
+//                        
+//                        } catch (Exception e) {
+//                            System.out.println("I clicked on " 
+//                                    + moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(), event2.getY()).board.boardLv 
+//                                    + " And the SelectedPiece is " + selectedPiece );
+//                        }
                         
 
                         
-                        System.out.println("selectedPiece Game line 342 " + selectedPiece);
-                        
-                       
-                        
-                        System.out.println("LV " + moveToSquare.board.boardLv);
-                        System.out.println("SQR color " + moveToSquare.getColor());
-                        boolean canMove = false;
-
+                        canMove = false;
                         // LV1
                         try {
                             currentSquare.setFill(currentSquare.getColor());
@@ -384,30 +394,65 @@ public class Game extends Application {
                             for (int i = 0; i < availableSquares.size(); i++) {
                                 availableSquares.get(i).setStroke(null);
                                 availableSquares.get(i).setFill(availableSquares.get(i).getColor());
-                                availableSquares2.get(i).setStroke(null);
-                                availableSquares2.get(i).setFill(availableSquares.get(i).getColor());
-                                availableSquares3.get(i).setStroke(null);
-                                availableSquares3.get(i).setFill(availableSquares.get(i).getColor());
-                                availableSquares4.get(i).setStroke(null);
-                                availableSquares4.get(i).setFill(availableSquares.get(i).getColor());
-
                             }
+                            
+                            for (int i = 0; i < availableSquares2.size(); i++) {
+                                availableSquares2.get(i).setStroke(null);
+                                availableSquares2.get(i).setFill(availableSquares2.get(i).getColor());
+                            }
+                            
+                            for (int i = 0; i < availableSquares3.size(); i++) {
+                                availableSquares3.get(i).setStroke(null);
+                                availableSquares3.get(i).setFill(availableSquares2.get(i).getColor());
+                            }
+                            
+                            for (int i = 0; i < availableSquares4.size(); i++) {
+                                availableSquares4.get(i).setStroke(null);
+                                availableSquares4.get(i).setFill(availableSquares2.get(i).getColor());
+                            }
+                            
+                            
+                            
                             
                             System.out.println("selectedPiece Game line 427 " + selectedPiece);
                             
                             if (currentPlayer == blackPlayer
                                     && moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(), event2.getY()) != currentSquare) {
-                                for (int i = 0; i < availableSquares.size(); i++) {
-                                    if (availableSquares.get(i) == moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(),
-                                            event2.getY()))
-                                        canMove = true;
-                                }
-                                if (canMove) {
-                                    System.out.println("selectedPiece Game line 439 " + selectedPiece);
-                                    System.out.println("Board " + moveToSquare.board.boardLv);
-                                    moveToSquare.board.moveBlackPiece(event2.getX(), event2.getY(),moveToSquare.board);
-                                    currentSquare.setPiece(null);
-                                    currentSquare.isOccupied = false;
+                                try {
+                                    for (int i = 0; i < availableSquares.size(); i++) {
+                                        if (availableSquares.get(i) == moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(),
+                                                event2.getY()))
+                                            canMove = true;
+                                    }
+                                    for (int i = 0; i < availableSquares2.size(); i++) {
+                                        if (availableSquares2.get(i) == moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(),
+                                                event2.getY()))
+                                            canMove = true;
+                                    }
+                                    for (int i = 0; i < availableSquares3.size(); i++) {
+                                        if (availableSquares3.get(i) == moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(),
+                                                event2.getY()))
+                                            canMove = true;
+                                    }
+                                    for (int i = 0; i < availableSquares4.size(); i++) {
+                                        if (availableSquares4.get(i) == moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(),
+                                                event2.getY()))
+                                            canMove = true;
+                                    }
+                                    if (canMove) {
+                                        System.out.println("selectedPiece Game line 439 " + selectedPiece);
+                                        System.out.println("Board " + moveToSquare.board.boardLv);
+                                        moveToSquare.board.moveBlackPiece(event2.getX(), event2.getY(),moveToSquare.board);
+//                                        currentSquare.setPiece(null);
+                                        currentSquare.isOccupied = false;
+                                    }
+                                    if (!canMove) {
+                                        currentSquare.setPiece(tmpPicePiece);
+                                        currentSquare.isOccupied = true;
+                                    }
+                                } catch (Exception e) {
+                                    currentSquare.setPiece(selectedPiece);
+                                    e.printStackTrace();
                                 }
 
                             } else if (currentPlayer == whitePlayer
@@ -416,12 +461,31 @@ public class Game extends Application {
                                     if (availableSquares.get(i) == moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(),
                                             event2.getY()))
                                         canMove = true;
-
                                 }
+                                for (int i = 0; i < availableSquares2.size(); i++) {
+                                    if (availableSquares2.get(i) == moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(),
+                                            event2.getY()))
+                                        canMove = true;
+                                }
+                                for (int i = 0; i < availableSquares3.size(); i++) {
+                                    if (availableSquares3.get(i) == moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(),
+                                            event2.getY()))
+                                        canMove = true;
+                                }
+                                for (int i = 0; i < availableSquares4.size(); i++) {
+                                    if (availableSquares4.get(i) == moveToSquare.board.getSquareBY_JAVAFX_Coor(event2.getX(),
+                                            event2.getY()))
+                                        canMove = true;
+                                }
+                              
                                 if (canMove) {
                                     moveToSquare.board.moveWhitePiece(event2.getX(), event2.getY(),moveToSquare.board);
-                                    currentSquare.setPiece(null);
+//                                    currentSquare.setPiece(null);
                                     currentSquare.isOccupied = false;
+                                }
+                                if (!canMove) {
+                                    currentSquare.setPiece(tmpPicePiece);
+                                    currentSquare.isOccupied = true;
                                 }
                             }
                         } catch (Exception e) {
@@ -430,11 +494,11 @@ public class Game extends Application {
 
                         if (currentPlayer == blackPlayer && moveToSquare.board.blackMoveSuccess == true) {
                             switchPlayers();
-
+                            canMove = false;
                             moveToSquare.board.blackMoveSuccess = false;
                         } else if (currentPlayer == whitePlayer && moveToSquare.board.whiteMoveSuccess == true) {
                             switchPlayers();
-
+                            canMove = false;
                             moveToSquare.board.whiteMoveSuccess = false;
                         }
 
@@ -466,118 +530,118 @@ public class Game extends Application {
         bishop_black2.setSquare(boardL1.getSquare(5, 0));
         boardL1.getSquare(5, 0).setPiece(bishop_black2);
 
-        rook_white = new PieceRook(blackPlayer, 0, 0);
-        rook_white.setSquare(boardL1.getSquare(0, 0));
-        boardL1.getSquare(0, 0).setPiece(rook_white);
+        rook_black1 = new PieceRook(blackPlayer, 0, 0);
+        rook_black1.setSquare(boardL1.getSquare(0, 0));
+        boardL1.getSquare(0, 0).setPiece(rook_black1);
 
-        rook_white2 = new PieceRook(blackPlayer, 7, 0);
-        rook_white2.setSquare(boardL1.getSquare(7, 0));
-        boardL1.getSquare(7, 0).setPiece(rook_white2);
+        rook_black2 = new PieceRook(blackPlayer, 7, 0);
+        rook_black2.setSquare(boardL1.getSquare(7, 0));
+        boardL1.getSquare(7, 0).setPiece(rook_black2);
 //        System.out.println(boardL1.getSquare(7, 0).returnPiece());
 
-        rook_black = new PieceRook(whitePlayer, 0, 7);
-        rook_black.setSquare(boardL1.getSquare(0, 7));
-        boardL1.getSquare(0, 7).setPiece(rook_black);
+        rook_white1 = new PieceRook(whitePlayer, 0, 7);
+        rook_white1.setSquare(boardL1.getSquare(0, 7));
+        boardL1.getSquare(0, 7).setPiece(rook_white1);
 
-        rook_black2 = new PieceRook(whitePlayer, 7, 7);
-        rook_black2.setSquare(boardL1.getSquare(7, 7));
-        boardL1.getSquare(7, 7).setPiece(rook_black2);
+        rook_white2 = new PieceRook(whitePlayer, 7, 7);
+        rook_white2.setSquare(boardL1.getSquare(7, 7));
+        boardL1.getSquare(7, 7).setPiece(rook_white2);
 
-        pawn_white = new PiecePawn(blackPlayer, 0, 1);
-        pawn_white.setSquare(boardL1.getSquare(0, 1));
-        boardL1.getSquare(0, 1).setPiece(pawn_white);
+        pawn_black1 = new PiecePawn(blackPlayer, 0, 1);
+        pawn_black1.setSquare(boardL1.getSquare(0, 1));
+        boardL1.getSquare(0, 1).setPiece(pawn_black1);
 
-        pawn_white2 = new PiecePawn(blackPlayer, 1, 1);
-        pawn_white2.setSquare(boardL1.getSquare(1, 1));
-        boardL1.getSquare(1, 1).setPiece(pawn_white2);
+        pawn_black2 = new PiecePawn(blackPlayer, 1, 1);
+        pawn_black2.setSquare(boardL1.getSquare(1, 1));
+        boardL1.getSquare(1, 1).setPiece(pawn_black2);
 
-        pawn_white3 = new PiecePawn(blackPlayer, 2, 1);
-        pawn_white3.setSquare(boardL1.getSquare(2, 1));
-        boardL1.getSquare(2, 1).setPiece(pawn_white3);
+        pawn_black3 = new PiecePawn(blackPlayer, 2, 1);
+        pawn_black3.setSquare(boardL1.getSquare(2, 1));
+        boardL1.getSquare(2, 1).setPiece(pawn_black3);
 
-        pawn_white4 = new PiecePawn(blackPlayer, 3, 1);
-        pawn_white4.setSquare(boardL1.getSquare(3, 1));
-        boardL1.getSquare(3, 1).setPiece(pawn_white4);
+        pawn_black4 = new PiecePawn(blackPlayer, 3, 1);
+        pawn_black4.setSquare(boardL1.getSquare(3, 1));
+        boardL1.getSquare(3, 1).setPiece(pawn_black4);
 
-        pawn_white5 = new PiecePawn(blackPlayer, 4, 1);
-        pawn_white5.setSquare(boardL1.getSquare(4, 1));
-        boardL1.getSquare(4, 1).setPiece(pawn_white5);
+        pawn_black5 = new PiecePawn(blackPlayer, 4, 1);
+        pawn_black5.setSquare(boardL1.getSquare(4, 1));
+        boardL1.getSquare(4, 1).setPiece(pawn_black5);
 
-        pawn_white6 = new PiecePawn(blackPlayer, 5, 1);
-        pawn_white6.setSquare(boardL1.getSquare(5, 1));
-        boardL1.getSquare(5, 1).setPiece(pawn_white6);
+        pawn_black6 = new PiecePawn(blackPlayer, 5, 1);
+        pawn_black6.setSquare(boardL1.getSquare(5, 1));
+        boardL1.getSquare(5, 1).setPiece(pawn_black6);
 
-        pawn_white7 = new PiecePawn(blackPlayer, 6, 1);
-        pawn_white7.setSquare(boardL1.getSquare(6, 1));
-        boardL1.getSquare(6, 1).setPiece(pawn_white7);
+        pawn_black7 = new PiecePawn(blackPlayer, 6, 1);
+        pawn_black7.setSquare(boardL1.getSquare(6, 1));
+        boardL1.getSquare(6, 1).setPiece(pawn_black7);
 
-        pawn_white8 = new PiecePawn(blackPlayer, 7, 1);
-        pawn_white8.setSquare(boardL1.getSquare(7, 1));
-        boardL1.getSquare(7, 1).setPiece(pawn_white8);
+        pawn_black8 = new PiecePawn(blackPlayer, 7, 1);
+        pawn_black8.setSquare(boardL1.getSquare(7, 1));
+        boardL1.getSquare(7, 1).setPiece(pawn_black8);
 
-        pawn_black = new PiecePawn(whitePlayer, 0, 6);
-        pawn_black.setSquare(boardL1.getSquare(0, 6));
-        boardL1.getSquare(0, 6).setPiece(pawn_black);
+        pawn_white1 = new PiecePawn(whitePlayer, 0, 6);
+        pawn_white1.setSquare(boardL1.getSquare(0, 6));
+        boardL1.getSquare(0, 6).setPiece(pawn_white1);
 
-        Bpawn2 = new PiecePawn(whitePlayer, 1, 6);
-        Bpawn2.setSquare(boardL1.getSquare(1, 6));
-        boardL1.getSquare(1, 6).setPiece(Bpawn2);
+        pawn_white2 = new PiecePawn(whitePlayer, 1, 6);
+        pawn_white2.setSquare(boardL1.getSquare(1, 6));
+        boardL1.getSquare(1, 6).setPiece(pawn_white2);
 
-        Bpawn3 = new PiecePawn(whitePlayer, 2, 6);
-        Bpawn3.setSquare(boardL1.getSquare(2, 6));
-        boardL1.getSquare(2, 6).setPiece(Bpawn3);
+        pawn_white3 = new PiecePawn(whitePlayer, 2, 6);
+        pawn_white3.setSquare(boardL1.getSquare(2, 6));
+        boardL1.getSquare(2, 6).setPiece(pawn_white3);
 
-        Bpawn4 = new PiecePawn(whitePlayer, 3, 6);
-        Bpawn4.setSquare(boardL1.getSquare(3, 6));
-        boardL1.getSquare(3, 6).setPiece(Bpawn4);
+        pawn_white4 = new PiecePawn(whitePlayer, 3, 6);
+        pawn_white4.setSquare(boardL1.getSquare(3, 6));
+        boardL1.getSquare(3, 6).setPiece(pawn_white4);
 
-        Bpawn5 = new PiecePawn(whitePlayer, 4, 6);
-        Bpawn5.setSquare(boardL1.getSquare(4, 6));
-        boardL1.getSquare(4, 6).setPiece(Bpawn5);
+        pawn_white5 = new PiecePawn(whitePlayer, 4, 6);
+        pawn_white5.setSquare(boardL1.getSquare(4, 6));
+        boardL1.getSquare(4, 6).setPiece(pawn_white5);
 
-        Bpawn6 = new PiecePawn(whitePlayer, 5, 6);
-        Bpawn6.setSquare(boardL1.getSquare(5, 6));
-        boardL1.getSquare(5, 6).setPiece(Bpawn6);
+        pawn_white6 = new PiecePawn(whitePlayer, 5, 6);
+        pawn_white6.setSquare(boardL1.getSquare(5, 6));
+        boardL1.getSquare(5, 6).setPiece(pawn_white6);
 
-        Bpawn7 = new PiecePawn(whitePlayer, 6, 6);
-        Bpawn7.setSquare(boardL1.getSquare(6, 6));
-        boardL1.getSquare(6, 6).setPiece(Bpawn7);
+        pawn_white7 = new PiecePawn(whitePlayer, 6, 6);
+        pawn_white7.setSquare(boardL1.getSquare(6, 6));
+        boardL1.getSquare(6, 6).setPiece(pawn_white7);
 
-        Bpawn8 = new PiecePawn(whitePlayer, 7, 6);
-        Bpawn8.setSquare(boardL1.getSquare(7, 6));
-        boardL1.getSquare(7, 6).setPiece(Bpawn8);
+        pawn_white8 = new PiecePawn(whitePlayer, 7, 6);
+        pawn_white8.setSquare(boardL1.getSquare(7, 6));
+        boardL1.getSquare(7, 6).setPiece(pawn_white8);
 
-        Wking = new PieceKing(blackPlayer, 4, 0);
-        Wking.setSquare(boardL1.getSquare(4, 0));
-        boardL1.getSquare(4, 0).setPiece(Wking);
+        king_black = new PieceKing(blackPlayer, 4, 0);
+        king_black.setSquare(boardL1.getSquare(4, 0));
+        boardL1.getSquare(4, 0).setPiece(king_black);
 
-        Bking = new PieceKing(whitePlayer, 4, 7);
-        Bking.setSquare(boardL1.getSquare(4, 7));
-        boardL1.getSquare(4, 7).setPiece(Bking);
+        king_white = new PieceKing(whitePlayer, 4, 7);
+        king_white.setSquare(boardL1.getSquare(4, 7));
+        boardL1.getSquare(4, 7).setPiece(king_white);
 
-        queen_white = new PieceQueen(blackPlayer, 3, 0);
-        queen_white.setSquare(boardL1.getSquare(3, 0));
-        boardL1.getSquare(3, 0).setPiece(queen_white);
+        queen_black = new PieceQueen(blackPlayer, 3, 0);
+        queen_black.setSquare(boardL1.getSquare(3, 0));
+        boardL1.getSquare(3, 0).setPiece(queen_black);
 
-        queen_black = new PieceQueen(whitePlayer, 3, 7);
-        queen_black.setSquare(boardL1.getSquare(3, 7));
-        boardL1.getSquare(3, 7).setPiece(queen_black);
+        queen_white = new PieceQueen(whitePlayer, 3, 7);
+        queen_white.setSquare(boardL1.getSquare(3, 7));
+        boardL1.getSquare(3, 7).setPiece(queen_white);
 
-        knight_white = new PieceKnight(blackPlayer, 1, 0);
-        knight_white.setSquare(boardL1.getSquare(1, 0));
-        boardL1.getSquare(1, 0).setPiece(knight_white);
+        knight_black1 = new PieceKnight(blackPlayer, 1, 0);
+        knight_black1.setSquare(boardL1.getSquare(1, 0));
+        boardL1.getSquare(1, 0).setPiece(knight_black1);
 
-        knight_white2 = new PieceKnight(blackPlayer, 6, 0);
-        knight_white2.setSquare(boardL1.getSquare(6, 0));
-        boardL1.getSquare(6, 0).setPiece(knight_white2);
+        knight_black2 = new PieceKnight(blackPlayer, 6, 0);
+        knight_black2.setSquare(boardL1.getSquare(6, 0));
+        boardL1.getSquare(6, 0).setPiece(knight_black2);
 
-        Bknight = new PieceKnight(whitePlayer, 1, 7);
-        Bknight.setSquare(boardL1.getSquare(1, 7));
-        boardL1.getSquare(1, 7).setPiece(Bknight);
+        knight_white1 = new PieceKnight(whitePlayer, 1, 7);
+        knight_white1.setSquare(boardL1.getSquare(1, 7));
+        boardL1.getSquare(1, 7).setPiece(knight_white1);
 
-        Bknight2 = new PieceKnight(whitePlayer, 6, 7);
-        Bknight2.setSquare(boardL1.getSquare(6, 7));
-        boardL1.getSquare(6, 7).setPiece(Bknight2);
+        knight_white2 = new PieceKnight(whitePlayer, 6, 7);
+        knight_white2.setSquare(boardL1.getSquare(6, 7));
+        boardL1.getSquare(6, 7).setPiece(knight_white2);
 
         boardL1.initPieces();
 //        activateWhite();
@@ -587,16 +651,7 @@ public class Game extends Application {
      * Switch players.
      */
     public void switchPlayers() {
-        if (boardL1.counterBlack == 1 && boardL1.counterWhite > 1) {
-
-//            status.setText("Black player lost!");
-
-        } else if (boardL1.counterWhite == 1 && boardL1.counterBlack > 1) {
-
-//            status.setText("White player lost!");
-        }
-
-        else if (this.currentPlayer == this.blackPlayer) {
+        if (this.currentPlayer == this.blackPlayer) {
             this.currentPlayer = this.whitePlayer;
 //            status.setText("White Player's Turn");  
 //            status.setTextFill(Color.GRAY);
@@ -609,6 +664,8 @@ public class Game extends Application {
         for (int x = 0; x < boardL1.getNumCols(); x++) {
             for (int y = 0; y < boardL1.getNumCols(); y++) {
                 boardL1.getArray()[x][y].setActive(false);
+                boardL2.getArray()[x][y].setActive(false);
+                boardL3.getArray()[x][y].setActive(false);
 
             }
         }
@@ -632,9 +689,9 @@ public class Game extends Application {
         try {
             bishop_white.getSquare().setActive(true);
             bishop_white2.getSquare().setActive(true);
-            rook_white.getSquare().setActive(true);
+            rook_white1.getSquare().setActive(true);
             rook_white2.getSquare().setActive(true);
-            pawn_white.getSquare().setActive(true);
+            pawn_white1.getSquare().setActive(true);
             pawn_white2.getSquare().setActive(true);
             pawn_white3.getSquare().setActive(true);
             pawn_white4.getSquare().setActive(true);
@@ -642,64 +699,32 @@ public class Game extends Application {
             pawn_white6.getSquare().setActive(true);
             pawn_white7.getSquare().setActive(true);
             pawn_white8.getSquare().setActive(true);
-            Wking.getSquare().setActive(true);
+            king_white.getSquare().setActive(true);
             queen_white.getSquare().setActive(true);
-            knight_white.getSquare().setActive(true);
+            knight_white1.getSquare().setActive(true);
             knight_white2.getSquare().setActive(true);
 
-            bishop_black.getSquare().setActive(false);
-            bishop_black2.getSquare().setActive(false);
-            rook_black.getSquare().setActive(false);
-            rook_black2.getSquare().setActive(false);
-            pawn_black.getSquare().setActive(false);
-            Bpawn2.getSquare().setActive(false);
-            Bpawn3.getSquare().setActive(false);
-            Bpawn4.getSquare().setActive(false);
-            Bpawn5.getSquare().setActive(false);
-            Bpawn6.getSquare().setActive(false);
-            Bpawn7.getSquare().setActive(false);
-            Bpawn8.getSquare().setActive(false);
-            Bking.getSquare().setActive(false);
-            queen_black.getSquare().setActive(false);
-            Bknight.getSquare().setActive(false);
-            Bknight2.getSquare().setActive(false);
+
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("cannot set White to and back to inactived");
-
-//           bishop_white.getSquare().setActive(true);
-//           bishop_white2.getSquare().setActive(true);
-//           rook_white.getSquare().setActive(true);
-//           rook_white2.getSquare().setActive(true);
-//           pawn_white.getSquare().setActive(true);
-//           pawn_white2.getSquare().setActive(true);
-//           pawn_white3.getSquare().setActive(true);
-//           pawn_white4.getSquare().setActive(true);
-//           pawn_white5.getSquare().setActive(true);
-//           pawn_white6.getSquare().setActive(true);
-//           pawn_white7.getSquare().setActive(true);
-//           pawn_white8.getSquare().setActive(true);
-//           Wking.getSquare().setActive(true);
-//           queen_white.getSquare().setActive(true);
-//           knight_white.getSquare().setActive(true);
-//           knight_white2.getSquare().setActive(true);
-//           
-//           bishop_white.getSquare().setActive(false);
-//           bishop_white2.getSquare().setActive(false);
-//           rook_white.getSquare().setActive(false);
-//           rook_white2.getSquare().setActive(false);
-//           pawn_white.getSquare().setActive(false);
-//           pawn_white2.getSquare().setActive(false);
-//           pawn_white3.getSquare().setActive(false);
-//           pawn_white4.getSquare().setActive(false);
-//           pawn_white5.getSquare().setActive(false);
-//           pawn_white6.getSquare().setActive(false);
-//           pawn_white7.getSquare().setActive(false);
-//           pawn_white8.getSquare().setActive(false);
-//           Wking.getSquare().setActive(false);
-//           queen_white.getSquare().setActive(false);
-//           knight_white.getSquare().setActive(false);
-//           knight_white2.getSquare().setActive(false);
+            bishop_white.getSquare().setActive(false);
+            bishop_white2.getSquare().setActive(false);
+            rook_white1.getSquare().setActive(false);
+            rook_white2.getSquare().setActive(false);
+            pawn_white1.getSquare().setActive(false);
+            pawn_white2.getSquare().setActive(false);
+            pawn_white3.getSquare().setActive(false);
+            pawn_white4.getSquare().setActive(false);
+            pawn_white5.getSquare().setActive(false);
+            pawn_white6.getSquare().setActive(false);
+            pawn_white7.getSquare().setActive(false);
+            pawn_white8.getSquare().setActive(false);
+            king_white.getSquare().setActive(false);
+            queen_white.getSquare().setActive(false);
+            knight_white1.getSquare().setActive(false);
+            knight_white2.getSquare().setActive(false);
         }
 
     }
@@ -713,75 +738,44 @@ public class Game extends Application {
 
             bishop_black.getSquare().setActive(true);
             bishop_black2.getSquare().setActive(true);
-            rook_black.getSquare().setActive(true);
+            rook_black1.getSquare().setActive(true);
             rook_black2.getSquare().setActive(true);
-            pawn_black.getSquare().setActive(true);
-            Bpawn2.getSquare().setActive(true);
-            Bpawn3.getSquare().setActive(true);
-            Bpawn4.getSquare().setActive(true);
-            Bpawn5.getSquare().setActive(true);
-            Bpawn6.getSquare().setActive(true);
-            Bpawn7.getSquare().setActive(true);
-            Bpawn8.getSquare().setActive(true);
-            Bking.getSquare().setActive(true);
+            pawn_black1.getSquare().setActive(true);
+            pawn_black2.getSquare().setActive(true);
+            pawn_black3.getSquare().setActive(true);
+            pawn_black4.getSquare().setActive(true);
+            pawn_black5.getSquare().setActive(true);
+            pawn_black6.getSquare().setActive(true);
+            pawn_black7.getSquare().setActive(true);
+            pawn_black8.getSquare().setActive(true);
+            king_black.getSquare().setActive(true);
             queen_black.getSquare().setActive(true);
-            Bknight.getSquare().setActive(true);
-            Bknight2.getSquare().setActive(true);
-
-//            bishop_white.getSquare().setActive(false);
-//            bishop_white2.getSquare().setActive(false);
-//            rook_white.getSquare().setActive(false);
-//            rook_white2.getSquare().setActive(false);
-//            pawn_white.getSquare().setActive(false);
-//            pawn_white2.getSquare().setActive(false);
-//            pawn_white3.getSquare().setActive(false);
-//            pawn_white4.getSquare().setActive(false);
-//            pawn_white5.getSquare().setActive(false);
-//            pawn_white6.getSquare().setActive(false);
-//            pawn_white7.getSquare().setActive(false);
-//            pawn_white8.getSquare().setActive(false);
-//            Wking.getSquare().setActive(false);
-//            queen_white.getSquare().setActive(false);
-//            knight_white.getSquare().setActive(false);
-//            knight_white2.getSquare().setActive(false);
+            knight_black1.getSquare().setActive(true);
+            knight_black2.getSquare().setActive(true);
+            
+ 
 
         } catch (Exception e) {
 
-//            bishop_black.getSquare().setActive(true); 
-//            bishop_black2.getSquare().setActive(true);
-//            rook_black.getSquare().setActive(true);
-//            rook_black2.getSquare().setActive(true);
-//            pawn_black.getSquare().setActive(true);
-//            Bpawn2.getSquare().setActive(true);
-//            Bpawn3.getSquare().setActive(true);
-//            Bpawn4.getSquare().setActive(true);
-//            Bpawn5.getSquare().setActive(true);
-//            Bpawn6.getSquare().setActive(true);
-//            Bpawn7.getSquare().setActive(true);
-//            Bpawn8.getSquare().setActive(true);
-//            Bking.getSquare().setActive(true);
-//            queen_black.getSquare().setActive(true);
-//            Bknight.getSquare().setActive(true);
-//            Bknight2.getSquare().setActive(true);
+
             e.printStackTrace();
             System.out.println("Cannot Set Black to Active, set back to inactivated");
-//            bishop_black.getSquare().setActive(false);
-//            bishop_black2.getSquare().setActive(false);
-//            rook_black.getSquare().setActive(false);
-//            rook_black2.getSquare().setActive(false);
-//            pawn_black.getSquare().setActive(false);
-//            Bpawn2.getSquare().setActive(false);
-//            Bpawn3.getSquare().setActive(false);
-//            Bpawn4.getSquare().setActive(false);
-//            Bpawn5.getSquare().setActive(false);
-//            Bpawn6.getSquare().setActive(false);
-//            Bpawn7.getSquare().setActive(false);
-//            Bpawn8.getSquare().setActive(false);
-//            Bking.getSquare().setActive(false);
-//            queen_black.getSquare().setActive(false);
-//            Bknight.getSquare().setActive(false);
-//            Bknight2.getSquare().setActive(false);
-
+            bishop_black.getSquare().setActive(false);
+            bishop_black2.getSquare().setActive(false);
+            rook_black1.getSquare().setActive(false);
+            rook_black2.getSquare().setActive(false);
+            pawn_black1.getSquare().setActive(false);
+            pawn_black2.getSquare().setActive(false);
+            pawn_black3.getSquare().setActive(false);
+            pawn_black4.getSquare().setActive(false);
+            pawn_black5.getSquare().setActive(false);
+            pawn_black6.getSquare().setActive(false);
+            pawn_black7.getSquare().setActive(false);
+            pawn_black8.getSquare().setActive(false);
+            king_black.getSquare().setActive(false);
+            queen_black.getSquare().setActive(false);
+            knight_black1.getSquare().setActive(false);
+            knight_black2.getSquare().setActive(false);
         }
 
     }

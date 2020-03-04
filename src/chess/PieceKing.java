@@ -61,10 +61,10 @@ public class PieceKing extends Piece {
         
         if (getOwner().getColour() == Color.WHITE) {
             iv.setX(650);
-            iv.setY(100);
+            iv.setY(560);
         } else {
-            iv.setX(750);
-            iv.setY(100);
+            iv.setX(660);
+            iv.setY(560);
         }
 
     }
